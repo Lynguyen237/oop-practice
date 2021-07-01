@@ -23,7 +23,6 @@ from abc import abstractmethod
 
 
 class Employee:
-
 	
     def __init__(self, fname, lname, salary, title, manager):
         self.fname = fname
@@ -31,7 +30,12 @@ class Employee:
         self.salary = salary
         self.title = title
         self.manager = manager		
+
         
+    def __repr__(self):
+        return f'<{self.fname} {self.lname}, title: {self.title}>'
+
+
     @abstractmethod
     def perform_task():
         pass
@@ -39,8 +43,14 @@ class Employee:
 
 
 class SoftWareEng(Employee):
-    def __init__(self, languages=[]):
+    
+    def __init__(self, fname, lname, salary, title, manager, languages=[]):
+        super().__init__(fname, lname, salary, title, manager)
         self.languages = languages
+
+
+    def __repr__(self):
+        return f'<[SWE] {self.fname} {self.lname}>'
 
 
     def perform_task(self):
@@ -48,27 +58,48 @@ class SoftWareEng(Employee):
 
 
 class NetworkEng(Employee):
-    def __init__(self, api_level):
-        # super().__init__()
+
+    def __init__(self, fname, lname, salary, title, manager, api_level):
+        super().__init__(fname, lname, salary, title, manager)
         self.api_level = api_level
+
 
     def perform_task():
         print("Working in Data Center")
+
 
     def fixing_router():
         print("Fixing router")
 
 
 class Manager(Employee):
-    def __init__(self, employees):
+
+    def __init__(self, fname, lname, salary, title, manager, employees=[]):
+        super().__init__(fname, lname, salary, title, manager)
         self.employees = employees
 
-    # def perform_task()
-    # Print “”
 
-swe = SoftWareEng('python')
+    def perform_task(self):
+        ''' manage employee <List FirstName of employees that directly managed by this manager>'''
+
+        employee_fnames = []
+
+        for employee in self.employees:
+            employee_fnames.append(employee.fname)
+        
+        print(f'Manage emloyees {employee_fnames}')
+
+
+mgr1 = Manager("A", "Ng", 100, "CEO", None)
+swe1 = SoftWareEng("B", "Smith", 80, "swe", mgr1, ['python'])
+mgr1.employees.append(swe1)
 
 
 
 #===== Resources =====
+'''
+Example of using super's method: https://github.com/Lynguyen237/oo-melons/blob/master/melons.py
+https://fellowship.hackbrightacademy.com/materials/pt7g/lectures/classes-2/ 
 
+Abstract base classes: https://www.python-course.eu/python3_abstract_classes.php
+'''
