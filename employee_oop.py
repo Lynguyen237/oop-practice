@@ -47,6 +47,8 @@ class SoftWareEng(Employee):
     def __init__(self, fname, lname, salary, title, manager, languages=[]):
         super().__init__(fname, lname, salary, title, manager)
         self.languages = languages
+        if manager:
+            manager.employees.append(self)
 
 
     def __repr__(self):
@@ -78,6 +80,8 @@ class Manager(Employee):
         super().__init__(fname, lname, salary, title, manager)
         self.employees = employees
 
+    def assign_reportee(self, employee):
+        self.employees.append(employee)
 
     def perform_task(self):
         ''' manage employee <List FirstName of employees that directly managed by this manager>'''
@@ -92,7 +96,7 @@ class Manager(Employee):
 
 mgr1 = Manager("A", "Ng", 100, "CEO", None)
 swe1 = SoftWareEng("B", "Smith", 80, "swe", mgr1, ['python'])
-mgr1.employees.append(swe1)
+# mgr1.employees.append(swe1)
 
 
 
